@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compra tus Tickets</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    background:#000;
+    color:#fff;
+}
+.video-bg{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:-1;
+}
+.container{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+.ticket-box{
+    width:100%;
+    max-width:1200px;
+    background:rgba(15,15,15,.92);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 0 50px rgba(0,0,0,.45);
+}
+.ticket-box h1{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:10px;
+}
+.ticket-box p{
+    text-align:center;
+    color:#bdbdbd;
+    margin-bottom:26px;
+}
+.option-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:#141414;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:14px;
+}
+.option-left{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    min-width:0;
+    flex:1;
+}
+.icon-box{
+    width:76px;
+    height:76px;
+    border-radius:18px;
+    background:#262626;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    flex-shrink:0;
+}
+.option-title{
+    font-size:18px;
+    font-weight:700;
+}
+.option-price{
+    font-size:24px;
+    font-weight:800;
+    margin-top:6px;
+}
+.option-sub{
+    font-size:13px;
+    color:#9b9b9b;
+    margin-top:4px;
+}
+.option-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.qty-btn{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.08);
+    background:#1f1f1f;
+    color:#fff;
+    font-size:24px;
+    cursor:pointer;
+}
+.qty-btn:hover{
+    background:#25D366;
+    color:#000;
+}
+.qty-box{
+    width:34px;
+    text-align:center;
+    font-size:20px;
+    font-weight:700;
+}
+.summary{
+    margin-top:22px;
+    background:#111;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:20px;
+}
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+.summary-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+.summary-total strong{
+    font-size:34px;
+    color:#25D366;
+}
+.purchase-summary{
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid rgba(255,255,255,.08);
+    color:#bdbdbd;
+    line-height:1.7;
+}
+.buy-btn{
+    display:block;
+    width:100%;
+    margin-top:18px;
+    text-align:center;
+    background:#25D366;
+    color:black;
+    text-decoration:none;
+    padding:18px;
+    border-radius:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+.buy-btn:hover{
+    transform:translateY(-2px);
+}
+@media(max-width:700px){
+    .option-card{
+        flex-direction:column;
+        align-items:stretch;
+    }
+}
+</style>
+</head>
+<body>
+
+<video autoplay muted loop playsinline class="video-bg">
+    <source src="https://www.image2url.com/r2/default/videos/1781812268442-3e41580f-9f3f-426a-a5df-3bebc47617bf.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div class="container">
+<div class="ticket-box">
+
+<h1>COMPRA TUS TICKETS</h1>
+<p>Selecciona la cantidad de cada opción</p>
+
+<div id="options"></div>
+
+<div class="summary">
+
+    <div class="summary-row">
+        <span>Total de items:</span>
+        <span id="totalItems">0</span>
+    </div>
+
+    <div class="summary-total">
+        <span>Total a pagar</span>
+        <strong>$<span id="totalPrice">0</span></strong>
+    </div>
+
+    <div id="purchaseSummary" class="purchase-summary">
+        No hay tickets seleccionados.
+    </div>
+
+</div>
+
+<a id="whatsappBtn"
+   class="buy-btn"
+   target="_blank">
+   COMPRAR
+</a>
+
+</div>
+</div>
+
+<script>
+
+const phone = "56912345678";
+
+const products = [
+    {
+        id:"p1",
+        icon:"🎟️",
+        title:"PREVENTA 2 | NORMAL",
+        price:10000,
+        subtitle:"Hasta 19 jun 2026"
+    },
+    {
+        id:"p2",
+        icon:"🎟️",
+        title:"PREVENTA 2 | NORMAL + 2 COVER",
+        price:12000,
+        subtitle:"Hasta 19 jun 2026"
+    },
+    {
+        id:"p3",
+        icon:"🎟️",
+        title:"GRUPO 5 PERSONAS | 5 ENTRADAS",
+        price:45000,
+        subtitle:"Pack especial"
+    },
+    {
+        id:"p4",
+        icon:"🎟️",
+        title:"GRUPO 5 PERSONAS | 5 ENTRADAS + 10 COVER",
+        price:55000,
+        subtitle:"Pack especial"
+    },
+    {
+        id:"p5",
+        icon:"🎟️",
+        title:"GRUPO 10 PERSONAS | 10 ENTRADAS",
+        price:80000,
+        subtitle:"Pack especial"
+    },
+    {
+        id:"p6",
+        icon:"🎟️",
+        title:"GRUPO 10 PERSONAS | 10 ENTRADAS + 10 SHOT TEQUILA + 10 COVER",
+        price:100000,
+        subtitle:"Pack especial"
+    }
+];
+
+const state = {};
+
+products.forEach(p => state[p.id] = 0);
+
+function formatCLP(n){
+    return n.toLocaleString("es-CL");
+}
+
+function renderOptions(){
+
+    document.getElementById("options").innerHTML =
+    products.map(p => `
+    <div class="option-card">
+
+        <div class="option-left">
+
+            <div class="icon-box">
+                ${p.icon}
+            </div>
+
+            <div>
+                <div class="option-title">
+                    ${p.title}
+                </div>
+
+                <div class="option-price">
+                    $ ${formatCLP(p.price)}
+                </div>
+
+                <div class="option-sub">
+                    ${p.subtitle}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="option-controls">
+
+            <button
+                class="qty-btn"
+                onclick="changeQty('${p.id}',-1)">
+                −
+            </button>
+
+            <div
+                class="qty-box"
+                id="qty-${p.id}">
+                0
+            </div>
+
+            <button
+                class="qty-btn"
+                onclick="changeQty('${p.id}',1)">
+                +
+            </button>
+
+        </div>
+
+    </div>
+    `).join("");
+}
+
+function changeQty(id, delta){
+
+    state[id] = Math.max(
+        0,
+        state[id] + delta
+    );
+
+    document.getElementById(
+        `qty-${id}`
+    ).innerText = state[id];
+
+    updateSummary();
+}
+
+function updateSummary(){
+
+    let total = 0;
+    let items = 0;
+    let lines = [];
+
+    products.forEach(p=>{
+
+        const qty = state[p.id];
+
+        if(qty > 0){
+
+            const subtotal =
+                qty * p.price;
+
+            total += subtotal;
+            items += qty;
+
+            lines.push(
+                `• ${p.title} x${qty} = $${formatCLP(subtotal)}`
+            );
+        }
+    });
+
+    document.getElementById(
+        "totalItems"
+    ).innerText = items;
+
+    document.getElementById(
+        "totalPrice"
+    ).innerText = formatCLP(total);
+
+    document.getElementById(
+        "purchaseSummary"
+    ).innerHTML =
+        lines.length
+        ? lines.join("<br>")
+        : "No hay tickets seleccionados.";
+
+    const message =
+        lines.length
+        ? `Hola 👋
+
+Quiero comprar:
+
+${lines.join("\n")}
+
+Total a pagar: $${formatCLP(total)}`
+        : `Hola 👋
+
+Quiero comprar entradas.`;
+
+    document.getElementById(
+        "whatsappBtn"
+    ).href =
+    `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
+renderOptions();
+updateSummary();
+
+</script>
+
+</body>
+</html>
