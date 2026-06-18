@@ -17,105 +17,92 @@ body{
     overflow-x:hidden;
     background:#000;
     color:#fff;
-}
-.video-bg{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
-}
-.overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    z-index:-1;
+    padding:10px;
 }
 .container{
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
+    padding:10px;
 }
 .ticket-box{
     width:100%;
-    max-width:1200px;
+    max-width:600px;
     background:rgba(15,15,15,.92);
     backdrop-filter:blur(12px);
     border:1px solid rgba(255,255,255,.08);
     border-radius:25px;
-    padding:30px;
+    padding:20px;
     box-shadow:0 0 50px rgba(0,0,0,.45);
 }
 .ticket-box h1{
     text-align:center;
-    font-size:40px;
-    margin-bottom:10px;
+    font-size:28px;
+    margin-bottom:8px;
 }
 .ticket-box p{
     text-align:center;
     color:#bdbdbd;
-    margin-bottom:26px;
+    margin-bottom:16px;
+    font-size:14px;
 }
 .option-card{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:16px;
+    gap:12px;
     background:#141414;
     border:1px solid rgba(255,255,255,.08);
     border-radius:18px;
-    padding:16px;
-    margin-bottom:14px;
+    padding:12px;
+    margin-bottom:10px;
 }
 .option-left{
     display:flex;
     align-items:center;
-    gap:16px;
+    gap:12px;
     min-width:0;
     flex:1;
 }
 .icon-box{
-    width:76px;
-    height:76px;
-    border-radius:18px;
+    width:50px;
+    height:50px;
+    border-radius:12px;
     background:#262626;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:30px;
+    font-size:24px;
     flex-shrink:0;
 }
 .option-title{
-    font-size:18px;
+    font-size:14px;
     font-weight:700;
 }
 .option-price{
-    font-size:24px;
+    font-size:18px;
     font-weight:800;
-    margin-top:6px;
+    margin-top:4px;
 }
 .option-sub{
-    font-size:13px;
+    font-size:11px;
     color:#9b9b9b;
-    margin-top:4px;
+    margin-top:2px;
 }
 .option-controls{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:8px;
 }
 .qty-btn{
-    width:44px;
-    height:44px;
+    width:32px;
+    height:32px;
     border-radius:50%;
     border:1px solid rgba(255,255,255,.08);
     background:#1f1f1f;
     color:#fff;
-    font-size:24px;
+    font-size:18px;
     cursor:pointer;
 }
 .qty-btn:hover{
@@ -123,73 +110,75 @@ body{
     color:#000;
 }
 .qty-box{
-    width:34px;
+    width:30px;
     text-align:center;
-    font-size:20px;
+    font-size:16px;
     font-weight:700;
 }
 .summary{
-    margin-top:22px;
+    margin-top:16px;
     background:#111;
     border:1px solid rgba(255,255,255,.08);
     border-radius:18px;
-    padding:20px;
+    padding:15px;
 }
 .summary-row{
     display:flex;
     justify-content:space-between;
-    margin-bottom:8px;
+    margin-bottom:6px;
+    font-size:14px;
 }
 .summary-total{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:14px;
-    padding-top:14px;
+    margin-top:10px;
+    padding-top:10px;
     border-top:1px solid rgba(255,255,255,.08);
 }
 .summary-total strong{
-    font-size:34px;
+    font-size:24px;
     color:#25D366;
 }
 .purchase-summary{
-    margin-top:15px;
-    padding-top:15px;
+    margin-top:10px;
+    padding-top:10px;
     border-top:1px solid rgba(255,255,255,.08);
     color:#bdbdbd;
-    line-height:1.7;
+    line-height:1.5;
+    font-size:13px;
 }
 .buy-btn{
     display:block;
     width:100%;
-    margin-top:18px;
+    margin-top:14px;
     text-align:center;
     background:#25D366;
     color:black;
     text-decoration:none;
-    padding:18px;
+    padding:14px;
     border-radius:15px;
-    font-size:18px;
+    font-size:16px;
     font-weight:bold;
 }
 .buy-btn:hover{
     transform:translateY(-2px);
 }
-@media(max-width:700px){
+@media(max-width:500px){
     .option-card{
         flex-direction:column;
         align-items:stretch;
+    }
+    .ticket-box{
+        padding:15px;
+    }
+    .ticket-box h1{
+        font-size:24px;
     }
 }
 </style>
 </head>
 <body>
-
-<video autoplay muted loop playsinline class="video-bg">
-    <source src="https://www.image2url.com/r2/default/videos/1781812268442-3e41580f-9f3f-426a-a5df-3bebc47617bf.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
 
 <div class="container">
 <div class="ticket-box">
@@ -220,7 +209,7 @@ body{
 <a id="whatsappBtn"
    class="buy-btn"
    target="_blank">
-   COMPRAR
+   Comprar por WhatsApp
 </a>
 
 </div>
